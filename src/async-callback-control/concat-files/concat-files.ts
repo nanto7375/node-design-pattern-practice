@@ -13,7 +13,7 @@ export class FileConcator {
 					hasError = true;
 					return cb(readError);
 				}
-				if (!this._isAllRead(++readCount, fileList.length, hasError)) {
+				if (!this._isAllFileRead(++readCount, fileList.length, hasError)) {
 					return;
 				}
 				this._writeSavedDatas(destination, cb);
@@ -36,7 +36,7 @@ export class FileConcator {
 		this._fs.writeFile(destination, this._dataArray.getJoinedDatas(), cb);
 	}
 
-	private _isAllRead(readCount: number, fileListLength: number, hasError: boolean) {
+	private _isAllFileRead(readCount: number, fileListLength: number, hasError: boolean) {
 		return readCount === fileListLength && !hasError;
 	}
 }
