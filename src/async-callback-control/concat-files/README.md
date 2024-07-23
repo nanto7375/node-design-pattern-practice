@@ -8,5 +8,5 @@
 ## Run
 
 ```zsh
-node index.js
+ts-node ./src/async-callback-control/concat-files/index.ts
 ```
