@@ -2,19 +2,19 @@ import * as fs from 'fs';
 
 type Callback = (error?: Error) => void;
 
-class DataQueue<T> {
-	private _queue: T[] = [];
+class DataArray<T> {
+	private _array: T[] = [];
 
-	setDataViaIndex(data: T, index: number) {
-		this._queue[index] = data;
+	setData(index: number, data: T) {
+		this._array[index] = data;
 	}
 	getConcatedDatas() {
-		return this._queue.join('');
+		return this._array.join('');
 	}
 }
 
 export class FileConcator {
-	constructor(private _fs = fs, private _queue = new DataQueue<string>()) {}
+	constructor(private _fs = fs, private _dataArray = new DataArray<string>()) {}
 
 	concatFiles(files: string[], destination: string, cb: Callback) {
 		let completed = 0;
@@ -38,13 +38,13 @@ export class FileConcator {
 				return cb(error);
 			}
 			console.log('read', file);
-			this._queue.setDataViaIndex(Buffer.from(data).toString(), fileIndex);
+			this._dataArray.setData(fileIndex, Buffer.from(data).toString());
 			cb();
 		});
 	}
 
 	private _writeSavedDatas(destination: string, cb: Callback) {
-		this._fs.writeFile(destination, this._queue.getConcatedDatas(), cb);
+		this._fs.writeFile(destination, this._dataArray.getConcatedDatas(), cb);
 	}
 
 	private _isAllCompleted(completedLength: number, filesLength: number, hasError: boolean) {
