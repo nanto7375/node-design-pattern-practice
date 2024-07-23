@@ -1,12 +1,10 @@
 import * as path from 'path';
 import { FileConcator } from './concat-files';
 
-const fileA = path.join(__dirname, '/files/a.txt');
-const fileB = path.join(__dirname, '/files/b.txt');
-const fileDestination = path.join(__dirname, '/files/dest.txt');
+const fileList = [path.join(__dirname, '/files/first.txt'), path.join(__dirname, '/files/second.txt')];
+const fileDestination = path.join(__dirname, '/files/destination.txt');
 
-const fileConcator = new FileConcator();
-fileConcator.concatFiles([fileA, fileB], fileDestination, error => {
+new FileConcator().concatFiles(fileList, fileDestination, error => {
 	if (error) {
 		console.log(error);
 		return process.exit(1);
