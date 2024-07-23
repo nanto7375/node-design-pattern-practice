@@ -32,13 +32,13 @@ export class FileConcator {
 		);
 	}
 
-	private _readFileWithSaving(file: string, index: number, cb: Callback) {
+	private _readFileWithSaving(file: string, fileIndex: number, cb: Callback) {
 		this._fs.readFile(file, (error, data) => {
 			if (error) {
 				return cb(error);
 			}
 			console.log('read', file);
-			this._queue.setDataViaIndex(Buffer.from(data).toString(), index);
+			this._queue.setDataViaIndex(Buffer.from(data).toString(), fileIndex);
 			cb();
 		});
 	}
