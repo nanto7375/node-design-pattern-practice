@@ -32,7 +32,7 @@ export class FileConcator {
 		);
 	}
 
-	_readFileWithSaving(file: string, index: number, cb: Callback) {
+	private _readFileWithSaving(file: string, index: number, cb: Callback) {
 		this._fs.readFile(file, (error, data) => {
 			if (error) {
 				return cb(error);
@@ -43,11 +43,11 @@ export class FileConcator {
 		});
 	}
 
-	_writeSavedDatas(destination: string, cb: Callback) {
+	private _writeSavedDatas(destination: string, cb: Callback) {
 		this._fs.writeFile(destination, this._queue.getConcatedDatas(), cb);
 	}
 
-	_isAllCompleted(completedLength: number, filesLength: number, hasError: boolean) {
+	private _isAllCompleted(completedLength: number, filesLength: number, hasError: boolean) {
 		return completedLength === filesLength && !hasError;
 	}
 }
