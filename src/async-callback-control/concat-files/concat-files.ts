@@ -14,7 +14,7 @@ class DataQueue<T> {
 }
 
 export class FileConcator {
-	constructor(private _fs = fs, private _queue = new DataQueue()) {}
+	constructor(private _fs = fs, private _queue = new DataQueue<string>()) {}
 
 	concatFiles(files: string[], destination: string, cb: Callback) {
 		let completed = 0;
