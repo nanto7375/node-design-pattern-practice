@@ -1,0 +1,22 @@
+node_modules/
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### macOS template
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Local
+.env
+dist
+
+temp
+logs
+experiment.*
