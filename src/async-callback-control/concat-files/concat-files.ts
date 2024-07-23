@@ -3,18 +3,20 @@ import * as fs from 'fs';
 export class FileConcator {
 	constructor(private _fs = fs, private _dataArray = new DataArray<string>()) {}
 
-	concatFiles(files: string[], destination: string, cb: Callback) {
-		let completed = 0;
+	concatFiles(fileList: string[], destination: string, cb: Callback) {
+		let readCount = 0;
 		let hasError = false;
-		files.forEach((file, index) =>
+
+		fileList.forEach((file, index) =>
 			this._readFileWithSaving(file, index, readError => {
 				if (readError) {
 					hasError = true;
 					return cb(readError);
 				}
-				if (this._isAllCompleted(++completed, files.length, hasError)) {
-					this._writeSavedDatas(destination, cb);
+				if (!this._isAllRead(++readCount, fileList.length, hasError)) {
+					return;
 				}
+				this._writeSavedDatas(destination, cb);
 			}),
 		);
 	}
@@ -34,8 +36,8 @@ export class FileConcator {
 		this._fs.writeFile(destination, this._dataArray.getJoinedDatas(), cb);
 	}
 
-	private _isAllCompleted(completedLength: number, filesLength: number, hasError: boolean) {
-		return completedLength === filesLength && !hasError;
+	private _isAllRead(readCount: number, fileListLength: number, hasError: boolean) {
+		return readCount === fileListLength && !hasError;
 	}
 }
 
