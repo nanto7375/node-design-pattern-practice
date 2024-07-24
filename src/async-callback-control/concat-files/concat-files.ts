@@ -5,15 +5,13 @@ export class FileConcator {
 
 	concatFiles(fileList: string[], destination: string, cb: Callback) {
 		let readCount = 0;
-		let hasError = false;
 
 		fileList.forEach((file, index) =>
 			this._readFileWithSaving(file, index, readError => {
 				if (readError) {
-					hasError = true;
 					return cb(readError);
 				}
-				if (!this._isAllFileDone(++readCount, fileList.length, hasError)) {
+				if (!this._isAllFileDone(++readCount, fileList.length)) {
 					return;
 				}
 				this._writeSavedDatas(destination, cb);
@@ -36,8 +34,8 @@ export class FileConcator {
 		this._fs.writeFile(destination, this._dataArray.getJoinedDatas(), cb);
 	}
 
-	private _isAllFileDone(readCount: number, fileListLength: number, hasError: boolean) {
-		return readCount === fileListLength && !hasError;
+	private _isAllFileDone(readCount: number, fileListLength: number) {
+		return readCount === fileListLength;
 	}
 }
 
